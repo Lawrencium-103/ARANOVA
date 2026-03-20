@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  const WHATSAPP_NUMBER = '2349039919790';
+  const WHATSAPP_NUMBER = '2349038819790';
 
   // ─── Handle broken images gracefully ───
   document.querySelectorAll('img').forEach(img => {
