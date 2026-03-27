@@ -143,38 +143,13 @@
                 }, 3000);
             }
 
-            // GA4 event
-            if (typeof gtag === 'function') {
-                gtag('event', 'marketplace_order', {
-                    event_category: 'conversion',
-                    event_label: city,
-                    value: 1
-                });
-            }
-
             // Open WhatsApp
             setTimeout(() => window.open(waUrl, '_blank'), 400);
         });
     }
 
     // ═══════════════════════════════════════
-    //  7. CTA Click Tracking
-    // ═══════════════════════════════════════
-    $$('[data-cta]').forEach(el => {
-        el.addEventListener('click', function () {
-            const action = this.getAttribute('data-cta');
-            if (typeof gtag === 'function') {
-                gtag('event', 'cta_click', {
-                    event_category: 'engagement',
-                    event_label: action,
-                    value: 1
-                });
-            }
-        });
-    });
-
-    // ═══════════════════════════════════════
-    //  8. Smooth Scroll for Anchors
+    //  7. Smooth Scroll for Anchors
     // ═══════════════════════════════════════
     $$('a[href^="#"]').forEach(a => {
         a.addEventListener('click', function (e) {
@@ -188,7 +163,7 @@
     });
 
     // ═══════════════════════════════════════
-    //  9. Essentials Checklist
+    //  8. Essentials Checklist
     // ═══════════════════════════════════════
     const essentialItems = $$('.essential-item');
     const essentialsCountEl = $('#essentialsCount');
@@ -202,12 +177,35 @@
             essentialsCountEl.style.transform = 'scale(1.3)';
             setTimeout(() => { essentialsCountEl.style.transform = 'scale(1)'; }, 200);
         }
-        // Auto-fill order form items textarea
+
+        // Auto-fill order form items textarea with Metadata
         if (formItemsEl) {
-            const items = [];
-            selected.forEach(el => {
-                items.push('1x ' + el.getAttribute('data-item'));
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
             });
+            const timeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+            // Calculate 5 weeks ahead
+            const fiveWeeksFromNow = new Date();
+            fiveWeeksFromNow.setDate(now.getDate() + 35);
+            const deliveryStr = fiveWeeksFromNow.toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            const items = [];
+            items.push(`🕒 ORDERED ON: ${dateStr} at ${timeStr}`);
+            items.push(`🚚 ESTIMATED DELIVERY: On or before ${deliveryStr} (5 Weeks)`);
+            items.push(`-----------------------------------`);
+            selected.forEach(el => {
+                items.push('• ' + el.getAttribute('data-item'));
+            });
+
             formItemsEl.value = items.join('\n');
         }
     }
@@ -220,7 +218,7 @@
     });
 
     // ═══════════════════════════════════════
-    //  10. Image Lightbox
+    //  9. Image Lightbox
     // ═══════════════════════════════════════
     const lightbox = $('#lightbox');
     const lightboxImg = $('#lightboxImg');
@@ -240,7 +238,6 @@
         document.body.style.overflow = '';
     }
 
-    // Click on any product image to open lightbox
     $$('.product-image img').forEach(img => {
         img.addEventListener('click', function () {
             openLightbox(this.src, this.alt);
@@ -253,17 +250,14 @@
             if (e.target === this) closeLightbox();
         });
     }
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeLightbox();
-    });
 
     // ═══════════════════════════════════════
-    //  11. Share with Partner
+    //  10. Universal Sharing
     // ═══════════════════════════════════════
-    window.shareWithPartner = function () {
+    window.shareToSocial = function () {
         const shareData = {
-            title: 'Aranova Marketplace — Plan Our Home',
-            text: 'Hey! I found this sourcing partner for our home. We can save 40-65% on essentials. Let\'s check it out together:',
+            title: 'Aranova Marketplace — Build Your Forever Home',
+            text: 'Hey! I found this premium sourcing partner. We can save 40-65% on our home essentials. Check it out:',
             url: window.location.href
         };
 
@@ -277,7 +271,7 @@
             dummy.select();
             document.execCommand('copy');
             document.body.removeChild(dummy);
-            showToast('Link copied! Share it with your partner 🔗');
+            showToast('Link copied! Spread the love 🔗');
         }
     };
 
@@ -293,5 +287,23 @@
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 3000);
     }
+
+    // ═══════════════════════════════════════
+    //  11. Audio Greeting (Web Speech API)
+    // ═══════════════════════════════════════
+    let greetingPlayed = false;
+    function playGreeting() {
+        if (greetingPlayed) return;
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = "Hi dear, Welcome to Aranova Marketplace.";
+        msg.rate = 0.9; // Slightly slower/warmer
+        msg.pitch = 1.1; // Slightly higher/friendly
+        window.speechSynthesis.speak(msg);
+        greetingPlayed = true;
+    }
+
+    // Trigger on first interaction (browser requirement)
+    document.addEventListener('click', playGreeting, { once: true });
+    document.addEventListener('scroll', playGreeting, { once: true });
 
 })();

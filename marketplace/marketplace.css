@@ -263,6 +263,21 @@ a {
     margin-top: -4px;
 }
 
+.nav-link-special {
+    color: var(--gold-deep);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    border: 1px dashed var(--gold-deep);
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.nav-link-special:hover {
+    background: var(--gold-light);
+    transform: scale(1.05);
+}
+
 .nav-links {
     display: flex;
     align-items: center;
@@ -326,8 +341,53 @@ a {
    HERO
    ═══════════════════════════════════════ */
 .hero {
-    padding: 140px 0 100px;
-    background: linear-gradient(135deg, var(--white) 0%, #f0ece0 100%);
+    padding: 160px 0 100px;
+    background: linear-gradient(135deg, #fffcf9 0%, #fff0f0 50%, #fdf6e3 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '❤️';
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    font-size: 5rem;
+    opacity: 0.1;
+    animation: floatHeart 6s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes floatHeart {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(15deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(20deg);
+    }
+}
+
+.hero-ctas .btn-primary {
+    position: relative;
+    box-shadow: 0 10px 30px rgba(184, 134, 11, 0.3);
+    animation: pulseGlow 3s infinite;
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 15px rgba(184, 134, 11, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(184, 134, 11, 0);
+    }
 }
 
 .hero-grid {
@@ -368,7 +428,12 @@ a {
 }
 
 .hero-bullets li {
-    color: var(--black);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .hero-ctas {
@@ -569,8 +634,13 @@ a {
     border-bottom: 1px solid var(--grey-mid);
 }
 
+.savings-table tbody tr {
+    transition: background 0.2s, transform 0.15s;
+}
+
 .savings-table tbody tr:hover {
-    background: #fdf8eb;
+    background: #fdf6e3;
+    transform: scale(1.005);
 }
 
 .price-old {
@@ -799,6 +869,13 @@ a {
     border-radius: var(--radius);
     padding: 32px;
     position: relative;
+    transition: transform 0.3s var(--ease-out), border-color 0.3s, box-shadow 0.3s;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(184, 134, 11, 0.25);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
 .quote-mark {
