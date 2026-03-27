@@ -60,6 +60,7 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#how-it-works" data-nav>How It Works</a></li>
                 <li><a href="#savings" data-nav>Savings</a></li>
+                <li><a href="#essentials" data-nav>Essentials</a></li>
                 <li><a href="#gallery" data-nav>Products</a></li>
                 <li><a href="#testimonials" data-nav>Reviews</a></li>
                 <li><a href="#faq" data-nav>FAQ</a></li>
@@ -230,6 +231,104 @@
                 + shipping to Lagos warehouse. Final quote may vary based on specifications.</p>
             <div style="text-align:center;margin-top:2rem;">
                 <a href="#order" class="btn btn-primary btn-lg" data-cta="table_order">Start Saving Now →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- ESSENTIALS CHECKLIST                         -->
+    <!-- ============================================ -->
+    <section class="essentials" id="essentials">
+        <div class="container">
+            <h2 class="section-title reveal">20 Essentials Every New Couple Needs</h2>
+            <p class="section-subtitle reveal">Tap to select what you need — your choices auto-fill the order form
+                below.</p>
+            <div class="essentials-grid">
+                <button class="essential-item reveal" data-item="55&quot; Smart TV">
+                    <span class="essential-icon">📺</span>
+                    <span class="essential-name">55" Smart TV</span>
+                </button>
+                <button class="essential-item reveal" data-item="Washing Machine 7kg">
+                    <span class="essential-icon">🫧</span>
+                    <span class="essential-name">Washing Machine</span>
+                </button>
+                <button class="essential-item reveal" data-item="Split AC 1.5HP">
+                    <span class="essential-icon">❄️</span>
+                    <span class="essential-name">Split AC (1.5HP)</span>
+                </button>
+                <button class="essential-item reveal" data-item="Refrigerator">
+                    <span class="essential-icon">🧊</span>
+                    <span class="essential-name">Refrigerator</span>
+                </button>
+                <button class="essential-item reveal" data-item="Microwave Oven">
+                    <span class="essential-icon">🍲</span>
+                    <span class="essential-name">Microwave Oven</span>
+                </button>
+                <button class="essential-item reveal" data-item="Air Fryer 8L">
+                    <span class="essential-icon">🍗</span>
+                    <span class="essential-name">Air Fryer</span>
+                </button>
+                <button class="essential-item reveal" data-item="Electric Oven">
+                    <span class="essential-icon">🔥</span>
+                    <span class="essential-name">Electric Oven</span>
+                </button>
+                <button class="essential-item reveal" data-item="Blender Set">
+                    <span class="essential-icon">🥤</span>
+                    <span class="essential-name">Blender Set</span>
+                </button>
+                <button class="essential-item reveal" data-item="Pressing Iron">
+                    <span class="essential-icon">👔</span>
+                    <span class="essential-name">Pressing Iron</span>
+                </button>
+                <button class="essential-item reveal" data-item="Pedestal Fan 18&quot;">
+                    <span class="essential-icon">🌀</span>
+                    <span class="essential-name">Pedestal Fan</span>
+                </button>
+                <button class="essential-item reveal" data-item="Ceiling Fan">
+                    <span class="essential-icon">💨</span>
+                    <span class="essential-name">Ceiling Fan</span>
+                </button>
+                <button class="essential-item reveal" data-item="Dining Table + Chairs">
+                    <span class="essential-icon">🪑</span>
+                    <span class="essential-name">Dining Table Set</span>
+                </button>
+                <button class="essential-item reveal" data-item="Bed Frame (Queen)">
+                    <span class="essential-icon">🛏️</span>
+                    <span class="essential-name">Bed Frame</span>
+                </button>
+                <button class="essential-item reveal" data-item="Mattress (Queen)">
+                    <span class="essential-icon">😴</span>
+                    <span class="essential-name">Mattress</span>
+                </button>
+                <button class="essential-item reveal" data-item="Shoe Rack (10-tier)">
+                    <span class="essential-icon">👟</span>
+                    <span class="essential-name">Shoe Rack</span>
+                </button>
+                <button class="essential-item reveal" data-item="Wall Frame Set">
+                    <span class="essential-icon">🖼️</span>
+                    <span class="essential-name">Wall Frames</span>
+                </button>
+                <button class="essential-item reveal" data-item="Egg Cooker">
+                    <span class="essential-icon">🥚</span>
+                    <span class="essential-name">Egg Cooker</span>
+                </button>
+                <button class="essential-item reveal" data-item="Rice Cooker">
+                    <span class="essential-icon">🍚</span>
+                    <span class="essential-name">Rice Cooker</span>
+                </button>
+                <button class="essential-item reveal" data-item="Water Dispenser">
+                    <span class="essential-icon">🚰</span>
+                    <span class="essential-name">Water Dispenser</span>
+                </button>
+                <button class="essential-item reveal" data-item="Curtain Set">
+                    <span class="essential-icon">🪟</span>
+                    <span class="essential-name">Curtain Set</span>
+                </button>
+            </div>
+            <div class="essentials-footer reveal">
+                <div class="essentials-count"><span id="essentialsCount">0</span> items selected</div>
+                <a href="#order" class="btn btn-primary btn-lg" id="essentialsCTA" data-cta="essentials_order">Add to My
+                    Order →</a>
             </div>
         </div>
     </section>
@@ -568,6 +667,12 @@
     </div>
 
     <script src="marketplace.js"></script>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+        <img class="lightbox-img" id="lightboxImg" alt="">
+    </div>
 </body>
 
 </html>

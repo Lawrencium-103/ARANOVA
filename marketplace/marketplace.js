@@ -187,4 +187,74 @@
         });
     });
 
+    // ═══════════════════════════════════════
+    //  9. Essentials Checklist
+    // ═══════════════════════════════════════
+    const essentialItems = $$('.essential-item');
+    const essentialsCountEl = $('#essentialsCount');
+    const formItemsEl = $('#formItems');
+
+    function updateEssentialsCount() {
+        const selected = $$('.essential-item.selected');
+        const count = selected.length;
+        if (essentialsCountEl) {
+            essentialsCountEl.textContent = count;
+            essentialsCountEl.style.transform = 'scale(1.3)';
+            setTimeout(() => { essentialsCountEl.style.transform = 'scale(1)'; }, 200);
+        }
+        // Auto-fill order form items textarea
+        if (formItemsEl) {
+            const items = [];
+            selected.forEach(el => {
+                items.push('1x ' + el.getAttribute('data-item'));
+            });
+            formItemsEl.value = items.join('\n');
+        }
+    }
+
+    essentialItems.forEach(btn => {
+        btn.addEventListener('click', function () {
+            this.classList.toggle('selected');
+            updateEssentialsCount();
+        });
+    });
+
+    // ═══════════════════════════════════════
+    //  10. Image Lightbox
+    // ═══════════════════════════════════════
+    const lightbox = $('#lightbox');
+    const lightboxImg = $('#lightboxImg');
+    const lightboxClose = $('#lightboxClose');
+
+    function openLightbox(src, alt) {
+        if (!lightbox || !lightboxImg) return;
+        lightboxImg.src = src;
+        lightboxImg.alt = alt || '';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        if (!lightbox) return;
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Click on any product image to open lightbox
+    $$('.product-image img').forEach(img => {
+        img.addEventListener('click', function () {
+            openLightbox(this.src, this.alt);
+        });
+    });
+
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    if (lightbox) {
+        lightbox.addEventListener('click', function (e) {
+            if (e.target === this) closeLightbox();
+        });
+    }
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
 })();
