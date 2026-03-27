@@ -1192,8 +1192,26 @@ img[data-error="true"]::after {
 
 .essentials-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+@media (min-width: 480px) {
+    .essentials-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .essentials-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .essentials-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
 }
 
 .essential-item {
@@ -1210,6 +1228,28 @@ img[data-error="true"]::after {
     transition: all 0.3s var(--ease-out);
     position: relative;
     overflow: hidden;
+}
+
+/* ... existing hover and selected states remain the same ... */
+
+.toast-msg {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #2a2a2a;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 9999;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast-msg.show {
+    transform: translateX(-50%) translateY(0);
 }
 
 .essential-item::before {

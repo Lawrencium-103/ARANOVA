@@ -257,4 +257,41 @@
         if (e.key === 'Escape') closeLightbox();
     });
 
+    // ═══════════════════════════════════════
+    //  11. Share with Partner
+    // ═══════════════════════════════════════
+    window.shareWithPartner = function () {
+        const shareData = {
+            title: 'Aranova Marketplace — Plan Our Home',
+            text: 'Hey! I found this sourcing partner for our home. We can save 40-65% on essentials. Let\'s check it out together:',
+            url: window.location.href
+        };
+
+        if (navigator.share) {
+            navigator.share(shareData).catch(err => console.log('Error sharing', err));
+        } else {
+            // Fallback: Copy to clipboard
+            const dummy = document.createElement('input');
+            document.body.appendChild(dummy);
+            dummy.value = window.location.href;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            showToast('Link copied! Share it with your partner 🔗');
+        }
+    };
+
+    function showToast(msg) {
+        let toast = $('#toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'toast';
+            toast.className = 'toast-msg';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
 })();
