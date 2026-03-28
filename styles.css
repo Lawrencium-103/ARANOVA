@@ -1802,6 +1802,58 @@ select {
     transform: translateX(-50%) translateY(0);
   }
 
+  /* Pro Luxury Footer & Buttons */
+  .btn-gold-luxury {
+    border: 1.5px solid var(--gold-deep);
+    color: var(--gold-deep);
+    background: transparent;
+    padding: 0.8rem 1.8rem;
+    border-radius: 40px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
+    margin-top: 1.5rem;
+  }
+
+  .btn-gold-luxury:hover {
+    background: var(--gold-deep);
+    color: #fff !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(184, 134, 11, 0.25);
+  }
+
+  .footer-top {
+    background: #050505;
+    padding: 6rem 0 4rem;
+    border-top: 1px solid rgba(184, 134, 11, 0.1);
+  }
+
+  .footer-logo {
+    color: var(--gold-deep);
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 4rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-col h4 {
+    color: var(--gold-deep);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+  }
+
+
   /* Hero */
   .hero-content {
     grid-template-columns: 1fr;
@@ -1943,4 +1995,415 @@ select {
     min-height: auto;
     padding: 40px 0;
   }
+}
+/* ---------------------------------------
+   SECTION 3.10 — INTERACTIVE CALENDAR (GLOBAL PATCH)
+   --------------------------------------- */
+.calendar-widget {
+  background: rgba(10, 10, 10, 0.95) !important;
+  border: 1.5px solid var(--gold) !important;
+  border-radius: 20px !important;
+  padding: 2.5rem !important;
+  margin: 3rem auto 0 !important;
+  max-width: 480px !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9) !important;
+  z-index: 10 !important;
+}
+
+.calendar-header {
+  text-align: center !important;
+  margin-bottom: 2rem !important;
+}
+
+.calendar-header h4 {
+  color: var(--gold) !important;
+  font-family: var(--font-heading) !important;
+  font-weight: 700 !important;
+  font-size: 1.6rem !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.calendar-grid {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  gap: 10px !important;
+}
+
+.calendar-day-label {
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  color: var(--gold) !important;
+  opacity: 0.8 !important;
+  text-align: center !important;
+  font-weight: 700 !important;
+  margin-bottom: 15px !important;
+}
+
+.day {
+  aspect-ratio: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 10px !important;
+  font-size: 1rem !important;
+  color: rgba(255, 255, 255, 0.25) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  cursor: default !important;
+}
+
+.day.today {
+  border: 2px solid var(--gold) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  background: rgba(201, 168, 76, 0.1) !important;
+}
+
+.day.available {
+  background: rgba(201, 168, 76, 0.12) !important;
+  color: var(--gold-light) !important;
+  border: 1.5px solid rgba(201, 168, 76, 0.6) !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+}
+
+.day.available:hover {
+  background: var(--gold) !important;
+  color: var(--black) !important;
+  transform: translateY(-8px) scale(1.15) !important;
+  box-shadow: 0 15px 30px rgba(201, 168, 76, 0.6) !important;
+  z-index: 2 !important;
+}
+
+.day.selected {
+  background: var(--gold) !important;
+  color: var(--black) !important;
+  border: 2px solid #fff !important;
+  box-shadow: 0 0 40px rgba(201, 168, 76, 1) !important;
+  transform: scale(1.1) !important;
+}
+
+.day.past {
+  opacity: 0.1 !important;
+  text-decoration: line-through !important;
+  cursor: not-allowed !important;
+}
+
+.day.empty {
+  border: none !important;
+  background: transparent !important;
+}
+
+@media (max-width: 600px) {
+  .calendar-widget {
+    padding: 1.5rem !important;
+    margin-top: 2rem !important;
+  }
+  .calendar-grid {
+    gap: 6px !important;
+  }
+  .day {
+    font-size: 0.85rem !important;
+  }
+}
+
+/* ---------------------------------------
+   SECTION 3.10 — PREMIUM FLORAL CALENDAR (FINAL DESIGN)
+   --------------------------------------- */
+.calendar-widget {
+  background: url('assets/calendar_bg.png') center/cover no-repeat !important;
+  border: 1.5px solid #D4AF37 !important; /* Deep Gold border */
+  border-radius: 20px !important;
+  padding: 3rem !important;
+  margin: 3rem auto 0 !important;
+  max-width: 500px !important;
+  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.95) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.calendar-widget::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65); /* Overlay for readability */
+  z-index: 1;
+}
+
+.calendar-header, .calendar-grid {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.calendar-header h4 {
+  color: #D4AF37 !important;
+  font-family: var(--font-heading) !important;
+  font-weight: 700 !important;
+  font-size: 1.8rem !important;
+  letter-spacing: 5px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0.5rem !important;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5) !important;
+}
+
+.calendar-grid {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  gap: 12px !important;
+}
+
+.calendar-day-label {
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  color: #D4AF37 !important; /* Deep gold for labels */
+  opacity: 0.9 !important;
+  text-align: center !important;
+  font-weight: 800 !important;
+  margin-bottom: 20px !important;
+}
+
+.day {
+  aspect-ratio: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 12px !important;
+  font-size: 1.1rem !important;
+  color: #ffffff !important; /* All numbers visible */
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  cursor: pointer !important; /* All clickable */
+}
+
+.day.weekend {
+  color: #D4AF37 !important; /* Deep Gold for weekends */
+  border: 1.5px solid rgba(212, 175, 55, 0.4) !important;
+  font-weight: 800 !important;
+}
+
+.day.today {
+  border: 2px solid #fff !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3) !important;
+}
+
+.day:hover {
+  background: #D4AF37 !important;
+  color: #000 !important;
+  transform: translateY(-8px) scale(1.15) !important;
+  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.5) !important;
+  z-index: 3 !important;
+}
+
+.day.selected {
+  background: #fff !important;
+  color: #000 !important;
+  border: 2px solid #D4AF37 !important;
+  box-shadow: 0 0 50px rgba(255, 255, 255, 1) !important;
+  transform: scale(1.1) rotate(5deg) !important;
+}
+
+.day.past {
+  opacity: 0.7 !important; /* Still clickable, just slightly dimmed */
+}
+
+.day.empty {
+  border: none !important;
+  background: transparent !important;
+  cursor: default !important;
+}
+
+@media (max-width: 600px) {
+  .calendar-widget {
+    padding: 2rem 1.5rem !important;
+  }
+  .calendar-grid {
+    gap: 8px !important;
+  }
+  .day {
+    font-size: 0.95rem !important;
+  }
+}
+
+/* ============================================ */
+/* SOCIAL PROOF TICKER & PAST DATE FIX          */
+/* ============================================ */
+.day.past {
+  opacity: 0.8 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+}
+
+.social-proof-section {
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem 0;
+  margin-top: 3rem;
+  background: rgba(10, 10, 10, 0.6);
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.social-ticker-container {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  width: 100%;
+}
+
+.social-ticker-container::before, .social-ticker-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.social-ticker-container::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(10,10,10,1), transparent);
+}
+.social-ticker-container::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(10,10,10,1), transparent);
+}
+
+.social-ticker {
+  display: inline-block;
+  animation: tickerScroll 80s linear infinite;
+  padding-left: 100%;
+}
+
+.social-ticker span {
+  display: inline-block;
+  color: #D4AF37;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+  margin: 0 2rem;
+  font-weight: 600;
+}
+
+.social-ticker span i {
+  color: #fff;
+  opacity: 0.5;
+  font-size: 0.85rem;
+  margin-left: 8px;
+  font-style: normal;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* COMPACT FOOTER STYLES */
+.footer {
+  padding: 4rem 0 2rem;
+  background: #0a0a0a;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.footer-col h4 {
+  color: #D4AF37;
+  margin-bottom: 1.2rem;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-col ul li {
+  margin-bottom: 0.8rem;
+}
+.footer-col a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.footer-col a:hover {
+  color: #fff !important;
+}
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.5);
+}
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 3rem;
+  }
+}
+
+/* ============================================ */
+/* SOCIAL PROOF TICKER & PAST DATE FIX          */
+/* TICKER REFINEMENTS: Slower speed & Elegant Font */
+/* ============================================ */
+.social-ticker {
+  animation: tickerScroll 200s linear infinite !important;
+}
+
+.social-ticker span {
+  font-family: var(--font-heading), serif !important;
+  font-style: italic !important;
+  font-size: 1.3rem !important;
+  letter-spacing: 2px !important;
+  text-transform: none !important;
+}
+
+.social-ticker span i {
+  font-family: var(--font-body), sans-serif !important;
+  font-style: normal !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  opacity: 0.7 !important;
+  margin-left: 10px !important;
+}
+
+/* ============================================ */
+/* THEMES MARQUEE ANIMATION                     */
+/* ============================================ */
+.themes-carousel-wrapper {
+  overflow: hidden !important;
+  position: relative !important;
+  width: 100% !important;
+  padding: 1rem 0 !important;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent) !important;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent) !important;
+}
+.themes-track {
+  display: flex !important;
+  width: max-content !important;
+  animation: themesMarquee 60s linear infinite !important;
+  gap: 2rem !important;
+  cursor: pointer !important;
+}
+.themes-track:hover {
+  animation-play-state: paused !important;
+}
+.carousel-arrow {
+  display: none !important; /* Hide old manual buttons */
+}
+@keyframes themesMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 1rem)); } 
 }

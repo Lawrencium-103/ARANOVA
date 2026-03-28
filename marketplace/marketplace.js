@@ -8,273 +8,7 @@
     const $ = s => document.querySelector(s);
     const $$ = s => document.querySelectorAll(s);
 
-    // ─── Handle broken images ───
-    $$('img').forEach(img => {
-        img.addEventListener('error', function () {
-            this.setAttribute('data-error', 'true');
-            this.alt = this.alt || 'Product image';
-        });
-    });
-
-    // ═══════════════════════════════════════
-    //  1. Scroll Progress
-    // ═══════════════════════════════════════
-    const scrollBar = $('#scrollProgress');
-    function updateScrollProgress() {
-        const scrolled = window.scrollY;
-        const height = document.documentElement.scrollHeight - window.innerHeight;
-        if (scrollBar && height > 0) {
-            scrollBar.style.width = (scrolled / height * 100) + '%';
-        }
-    }
-
-    // ═══════════════════════════════════════
-    //  2. Navbar Scroll Effect
-    // ═══════════════════════════════════════
-    const navbar = $('#navbar');
-    function handleNavScroll() {
-        if (!navbar) return;
-        navbar.classList.toggle('scrolled', window.scrollY > 40);
-    }
-
-    // Combined scroll handler
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                updateScrollProgress();
-                handleNavScroll();
-                ticking = false;
-            });
-            ticking = true;
-        }
-    });
-
-    // ═══════════════════════════════════════
-    //  3. Mobile Nav Toggle
-    // ═══════════════════════════════════════
-    const navToggle = $('#navToggle');
-    const navLinks = $('#navLinks');
-    if (navToggle && navLinks) {
-        navToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-        });
-        $$('[data-nav]').forEach(link => {
-            link.addEventListener('click', () => navLinks.classList.remove('open'));
-        });
-    }
-
-    // ═══════════════════════════════════════
-    //  4. Scroll Reveal
-    // ═══════════════════════════════════════
-    const revealItems = $$('.reveal');
-    const revealObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-    revealItems.forEach(el => revealObserver.observe(el));
-
-    // ═══════════════════════════════════════
-    //  5. FAQ Accordion
-    // ═══════════════════════════════════════
-    $$('.faq-question').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const item = this.closest('.faq-item');
-            const isActive = item.classList.contains('active');
-
-            // Close all others
-            $$('.faq-item.active').forEach(active => {
-                if (active !== item) active.classList.remove('active');
-            });
-
-            item.classList.toggle('active', !isActive);
-            this.setAttribute('aria-expanded', !isActive);
-        });
-    });
-
-    // ═══════════════════════════════════════
-    //  6. Order Form Submission
-    // ═══════════════════════════════════════
-    const orderForm = $('#orderForm');
-    if (orderForm) {
-        orderForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const name = ($('#formName') || {}).value || '';
-            const email = ($('#formEmail') || {}).value || '';
-            const phone = ($('#formPhone') || {}).value || '';
-            const city = ($('#formCity') || {}).value || '';
-            const items = ($('#formItems') || {}).value || '';
-            const budget = ($('#formBudget') || {}).value || '';
-
-            // Fire-and-forget to Formspree
-            const formData = new FormData(this);
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            }).catch(() => { /* silent fail — WhatsApp is primary */ });
-
-            // Build WhatsApp message
-            let msg = `*Aranova MarketPlace — New Order*\n\n`;
-            msg += `*Name:* ${name}\n`;
-            msg += `*Email:* ${email}\n`;
-            msg += `*Phone:* ${phone}\n`;
-            msg += `*Delivery:* ${city}\n`;
-            msg += `*Items:*\n${items}\n`;
-            if (budget) msg += `\n*Budget/Notes:* ${budget}\n`;
-            msg += `\n_Sent from Aranova Marketplace_`;
-
-            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-
-            // Update button → confirm
-            const submitBtn = this.querySelector('button[type="submit"]');
-            if (submitBtn) {
-                const original = submitBtn.textContent;
-                submitBtn.textContent = '✓ Request Sent! Opening WhatsApp…';
-                submitBtn.disabled = true;
-                setTimeout(() => {
-                    submitBtn.textContent = original;
-                    submitBtn.disabled = false;
-                }, 3000);
-            }
-
-            // Open WhatsApp
-            setTimeout(() => window.open(waUrl, '_blank'), 400);
-        });
-    }
-
-    // ═══════════════════════════════════════
-    //  7. Smooth Scroll for Anchors
-    // ═══════════════════════════════════════
-    $$('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', function (e) {
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                e.preventDefault();
-                const y = target.getBoundingClientRect().top + window.scrollY - 80;
-                window.scrollTo({ top: y, behavior: 'smooth' });
-            }
-        });
-    });
-
-    // ═══════════════════════════════════════
-    //  8. Essentials Checklist
-    // ═══════════════════════════════════════
-    const essentialItems = $$('.essential-item');
-    const essentialsCountEl = $('#essentialsCount');
-    const formItemsEl = $('#formItems');
-
-    function updateEssentialsCount() {
-        const selected = $$('.essential-item.selected');
-        const count = selected.length;
-        if (essentialsCountEl) {
-            essentialsCountEl.textContent = count;
-            essentialsCountEl.style.transform = 'scale(1.3)';
-            setTimeout(() => { essentialsCountEl.style.transform = 'scale(1)'; }, 200);
-        }
-
-        // Auto-fill order form items textarea with Metadata
-        if (formItemsEl) {
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('en-GB', {
-                weekday: 'long',
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            });
-            const timeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-
-            // Calculate 5 weeks ahead
-            const fiveWeeksFromNow = new Date();
-            fiveWeeksFromNow.setDate(now.getDate() + 35);
-            const deliveryStr = fiveWeeksFromNow.toLocaleDateString('en-GB', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            });
-
-            const items = [];
-            items.push(`🕒 ORDERED ON: ${dateStr} at ${timeStr}`);
-            items.push(`🚚 ESTIMATED DELIVERY: On or before ${deliveryStr} (5 Weeks)`);
-            items.push(`-----------------------------------`);
-            selected.forEach(el => {
-                items.push('• ' + el.getAttribute('data-item'));
-            });
-
-            formItemsEl.value = items.join('\n');
-        }
-    }
-
-    essentialItems.forEach(btn => {
-        btn.addEventListener('click', function () {
-            this.classList.toggle('selected');
-            updateEssentialsCount();
-        });
-    });
-
-    // ═══════════════════════════════════════
-    //  9. Image Lightbox
-    // ═══════════════════════════════════════
-    const lightbox = $('#lightbox');
-    const lightboxImg = $('#lightboxImg');
-    const lightboxClose = $('#lightboxClose');
-
-    function openLightbox(src, alt) {
-        if (!lightbox || !lightboxImg) return;
-        lightboxImg.src = src;
-        lightboxImg.alt = alt || '';
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-        if (!lightbox) return;
-        lightbox.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    $$('.product-image img').forEach(img => {
-        img.addEventListener('click', function () {
-            openLightbox(this.src, this.alt);
-        });
-    });
-
-    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-    if (lightbox) {
-        lightbox.addEventListener('click', function (e) {
-            if (e.target === this) closeLightbox();
-        });
-    }
-
-    // ═══════════════════════════════════════
-    //  10. Universal Sharing
-    // ═══════════════════════════════════════
-    window.shareToSocial = function () {
-        const shareData = {
-            title: 'Aranova Marketplace — Build Your Forever Home',
-            text: 'Hey! I found this premium sourcing partner. We can save 40-65% on our home essentials. Check it out:',
-            url: window.location.href
-        };
-
-        if (navigator.share) {
-            navigator.share(shareData).catch(err => console.log('Error sharing', err));
-        } else {
-            // Fallback: Copy to clipboard
-            const dummy = document.createElement('input');
-            document.body.appendChild(dummy);
-            dummy.value = window.location.href;
-            dummy.select();
-            document.execCommand('copy');
-            document.body.removeChild(dummy);
-            showToast('Link copied! Spread the love 🔗');
-        }
-    };
-
+    // ─── Utility ───
     function showToast(msg) {
         let toast = $('#toast');
         if (!toast) {
@@ -289,21 +23,147 @@
     }
 
     // ═══════════════════════════════════════
-    //  11. Audio Greeting (Web Speech API)
+    //  1. Audio Greeting (Bespoke Voice)
     // ═══════════════════════════════════════
     let greetingPlayed = false;
+
     function playGreeting() {
         if (greetingPlayed) return;
-        const msg = new SpeechSynthesisUtterance();
-        msg.text = "Hi dear, Welcome to Aranova Marketplace.";
-        msg.rate = 0.9; // Slightly slower/warmer
-        msg.pitch = 1.1; // Slightly higher/friendly
-        window.speechSynthesis.speak(msg);
         greetingPlayed = true;
+
+        // Luxury manual fade helper (maximum browser compatibility)
+        const fadeAudio = (audio, targetVol, duration) => {
+            audio.volume = 0;
+            const steps = 25;
+            const stepVal = targetVol / steps;
+            const stepTime = duration / steps;
+            let current = 0;
+            const timer = setInterval(() => {
+                if (current < steps) {
+                    audio.volume = Math.min(targetVol, audio.volume + stepVal);
+                    current++;
+                } else {
+                    clearInterval(timer);
+                }
+            }, stepTime);
+        };
+
+        try {
+            // Play Marketplace Greeting (WAV)
+            const audio = new Audio('../assets/greeting_marketplace.wav');
+            audio.preload = 'auto'; // Force browser fetch to eliminate delay
+            audio.play().then(() => {
+                fadeAudio(audio, 0.9, 1500);
+            }).catch(e => console.error("Greeting blocked/missing:", e));
+        } catch (e) {
+            console.error("Audio failed:", e);
+        }
     }
 
-    // Trigger on first interaction (browser requirement)
+    // Trigger on interaction (Click is most reliable)
     document.addEventListener('click', playGreeting, { once: true });
-    document.addEventListener('scroll', playGreeting, { once: true });
+
+    // ═══════════════════════════════════════
+    //  2. Savings & Selection Logic
+    // ═══════════════════════════════════════
+    const essentialItems = $$('.essential-item');
+    const essentialsCountEl = $('#essentialsCount');
+    const formItemsEl = $('#formItems');
+
+    function updateEssentialsCount() {
+        const selected = $$('.essential-item.selected');
+        const count = selected.length;
+        let totalSavings = 0;
+
+        selected.forEach(el => {
+            const savings = parseInt(el.getAttribute('data-savings') || '0', 10);
+            totalSavings += savings;
+        });
+
+        if (essentialsCountEl) essentialsCountEl.textContent = count;
+
+        if (formItemsEl) {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+            const fiveWeeksFromNow = new Date();
+            fiveWeeksFromNow.setDate(now.getDate() + 35);
+            const deliveryStr = fiveWeeksFromNow.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+            const items = [];
+            items.push(`🕒 ORDERED ON: ${dateStr} at ${timeStr}`);
+            items.push(`🚚 ESTIMATED DELIVERY: ${deliveryStr}`);
+            items.push(`💰 TOTAL SAVINGS: ₦${totalSavings.toLocaleString()}`);
+            items.push(`-----------------------------------`);
+            selected.forEach(el => items.push('• ' + el.getAttribute('data-item')));
+
+            formItemsEl.value = items.join('\n');
+        }
+    }
+
+    essentialItems.forEach(btn => {
+        btn.addEventListener('click', function () {
+            this.classList.toggle('selected');
+            updateEssentialsCount();
+        });
+    });
+
+    // ═══════════════════════════════════════
+    //  3. Order Submission
+    // ═══════════════════════════════════════
+    const orderForm = $('#orderForm');
+    if (orderForm) {
+        orderForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = $('#formName').value;
+            const phone = $('#formPhone').value;
+            const city = $('#formCity').value;
+            const address = $('#formAddress').value;
+            const items = $('#formItems').value;
+            const budget = $('#formBudget').value;
+
+            let msg = `*ARANOVA MARKETPLACE — NEW ORDER*\n\n`;
+            msg += `*Customer:* ${name}\n`;
+            msg += `*WhatsApp:* ${phone}\n`;
+            msg += `*Location:* ${city}\n`;
+            msg += `*Address:* ${address}\n\n`;
+            msg += `*Order Highlights:*\n${items}\n`;
+            if (budget) msg += `\n*Notes:* ${budget}\n`;
+            msg += `\n_Building a forever home with Aranova_`;
+
+            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+            fetch(this.action, { method: 'POST', body: new FormData(this) });
+            window.open(waUrl, '_blank');
+            showToast('Opening WhatsApp... Your special order is ready!');
+        });
+    }
+
+    // ═══════════════════════════════════════
+    //  4. General UI
+    // ═══════════════════════════════════════
+    const navbar = $('#navbar');
+    window.addEventListener('scroll', () => {
+        if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    $$('.reveal').forEach(el => revealObserver.observe(el));
+
+    window.shareToSocial = function () {
+        if (navigator.share) {
+            navigator.share({ title: 'Aranova Marketplace', text: 'Save 40%+ on your home essentials.', url: window.location.href });
+        } else {
+            showToast('Magic link copied! Share the love ✨');
+        }
+    };
 
 })();

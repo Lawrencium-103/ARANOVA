@@ -527,14 +527,27 @@
   <!-- ============================================ -->
   <section class="urgency" id="urgency">
     <div class="container">
-      <h2 class="urgency-headline reveal">December 2025: Only <span class="counter" data-target="4">0</span> Saturday
-        slots remaining.</h2>
-      <p class="urgency-sub reveal">January weddings are filling now.</p>
+      <h2 class="urgency-headline reveal"><span id="calMonthOut">March 2026</span>: Only <span id="slotsCounter"
+          class="counter">4</span> Saturday slots remaining.</h2>
+      <p class="reveal" id="urgencyDesc"><span id="monthNameText">March 2026</span>: Only <span id="slotsText">4</span>
+        Saturday slots remaining.<br>Next month is filling fast.</p>
       <div class="calendar-widget reveal" id="calendarWidget">
         <!-- Calendar rendered by JS -->
       </div>
       <p class="urgency-note reveal">ARANOVA accepts a maximum of 3 bookings per weekend to guarantee full team
         attention at every event.</p>
+    </div>
+
+    <!-- Social Proof Ticker -->
+    <div class="social-proof-section reveal" style="margin-top: 3rem; text-align: center;">
+      <h4
+        style="color: rgba(255,255,255,0.6); font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem;">
+        See where celebrations are happening...</h4>
+      <div class="social-ticker-container">
+        <div class="social-ticker" id="socialTicker">
+          <!-- Populated by JS -->
+        </div>
+      </div>
     </div>
   </section>
 
@@ -769,39 +782,78 @@
             </div>
             <div class="form-group">
               <label for="formDate">Event Date</label>
-              <input type="date" id="formDate" name="event_date">
+              <input type="text" id="formDate" name="event_date" placeholder="Select from calendar above" readonly
+                required>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="formVenue">Event Venue / Area in Lagos *</label>
-            <input type="text" id="formVenue" name="venue" required placeholder="e.g. Lekki, Victoria Island">
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="formTheme">Magazine Theme</label>
-              <select id="formTheme" name="magazine_theme">
-                <option value="">Select…</option>
-                <option>Vogue Bridal Edition</option>
-                <option>Forbes Africa — Excellence</option>
-                <option>TIME — Person of the Year</option>
-                <option>Ovation International</option>
-                <option>City People — Society Wedding</option>
-                <option>Arise Magazine</option>
-                <option>Lagos Big Boy / Big Girl</option>
-                <option>CEO of the Year — Corporate</option>
-                <option>Aso Rock Rockstar</option>
-                <option>Nollywood Star</option>
+              <label for="formState">Event State</label>
+              <select id="formState" name="state" required>
+                <option value="">Select State…</option>
+                <option>Lagos</option>
+                <option>Abuja (FCT)</option>
+                <option>Rivers (Port Harcourt)</option>
+                <option>Ogun</option>
+                <option>Oyo</option>
+                <option>Anambra</option>
+                <option>Delta</option>
+                <option>Edo</option>
+                <option>Enugu</option>
+                <option>Kano</option>
+                <option>Kaduna</option>
+                <option>Kwara</option>
+                <option>Akwa Ibom</option>
+                <option>Abia</option>
+                <option>Adamawa</option>
+                <option>Bauchi</option>
+                <option>Bayelsa</option>
+                <option>Benue</option>
+                <option>Borno</option>
+                <option>Cross River</option>
+                <option>Ebonyi</option>
+                <option>Ekiti</option>
+                <option>Gombe</option>
+                <option>Imo</option>
+                <option>Jigawa</option>
+                <option>Katsina</option>
+                <option>Kebbi</option>
+                <option>Kogi</option>
+                <option>Nasarawa</option>
+                <option>Niger</option>
+                <option>Ondo</option>
+                <option>Osun</option>
+                <option>Plateau</option>
+                <option>Sokoto</option>
+                <option>Taraba</option>
+                <option>Yobe</option>
+                <option>Zamfara</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="formPackage">Package</label>
-              <select id="formPackage" name="package">
-                <option value="">Select…</option>
-                <option>Silver — ₦173,000</option>
-                <option>Gold — ₦269,000</option>
-                <option>Platinum — From ₦500,000</option>
+              <label for="formVenue">Event Venue / Address</label>
+              <input type="text" id="formVenue" name="venue" placeholder="Hotel, Landmark, or House..." required>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="formTheme">Magazine Theme (Optional)</label>
+              <select id="formTheme" name="magazine_theme">
+                <option value="">Select a vibe…</option>
+                <option value="VOGUE">The VOGUE Luxe</option>
+                <option value="GLAMOUR">The GLAMOUR Gold</option>
+                <option value="BRIDE">The MODERN BRIDE</option>
               </select>
             </div>
+          </div>
+          <div class="form-group">
+            <label for="formPackage">Package</label>
+            <select id="formPackage" name="package">
+              <option value="">Select…</option>
+              <option>Silver — ₦173,000</option>
+              <option>Gold — ₦269,000</option>
+              <option>Platinum — From ₦500,000</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="formHear">How did you hear about us?</label>
@@ -822,63 +874,40 @@
   <!-- ============================================ -->
   <!-- SECTION 3.14 — FOOTER                         -->
   <!-- ============================================ -->
-  <footer class="footer" id="footer">
+  <footer class="footer">
     <div class="container">
-      <div class="footer-top">
-        <div class="footer-logo">
-          <span class="logo-star">✦</span> ARANOVA
-          <p class="footer-tagline">Where You Become The Cover</p>
-        </div>
-      </div>
       <div class="footer-grid">
-        <div class="footer-col">
-          <h4>About</h4>
-          <p>Nigeria's premium walk-in magazine cover box experience. We transform your guests into cover stars at
-            weddings, corporate events and celebrations.</p>
+        <div class="footer-col reveal">
+          <h3 class="footer-logo">ARANOVA</h3>
+          <p style="margin-bottom: 1.5rem; color: rgba(255,255,255,0.7); font-size: 0.95rem;">Every couple is a story.
+            We help you tell yours through Nigeria's most iconic wedding cover box experience.</p>
+          <a href="marketplace/index.html" class="btn btn-gold-luxury"
+            style="padding: 10px 20px; font-size: 0.85rem;">Sourcing Suite →</a>
         </div>
-        <div class="footer-links-col">
-          <h4>Experience</h4>
-          <ul>
-            <li><a href="#themes">View Themes</a></li>
-            <li><a href="marketplace/index.html" style="color: var(--gold-deep); font-weight: 700;">Build Your Home
-                Wishlist →</a></li>
-            <li><a href="javascript:void(0)" onclick="shareToSocial()">📤 Share the Love</a></li>
-            <li><a href="#faq">FAQ</a></li>
+        <div class="footer-col reveal" style="transition-delay: 0.1s;">
+          <h4>Availability</h4>
+          <ul style="color: rgba(255,255,255,0.6); font-size: 0.95rem;">
+            <li>Lagos, Nigeria</li>
+            <li>Abuja, FCT</li>
+            <li>Port Harcourt, Rivers</li>
+            <li>Ibadan, Oyo</li>
           </ul>
         </div>
-        <div class="footer-col">
-          <h4>Services</h4>
-          <ul>
-            <li>Weddings</li>
-            <li>Corporate Events</li>
-            <li>Birthday Parties</li>
-            <li>Brand Activations</li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Cities</h4>
-          <ul>
-            <li>Lagos Island</li>
-            <li>Lekki</li>
-            <li>Victoria Island</li>
-            <li>Ikeja</li>
-            <li>Abuja</li>
-            <li>Port Harcourt</li>
-            <li>Ibadan</li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Contact</h4>
-          <ul>
-            <li><a href="mailto:oladeji.lawrence@gmail.com">oladeji.lawrence@gmail.com</a></li>
-            <li><a
-                href="https://wa.me/2349038819790?text=Hi%20ARANOVA%2C%20I%27d%20like%20to%20book%20a%20magazine%20cover%20box%20experience."
-                target="_blank" rel="noopener">+234 903 881 9790</a></li>
+        <div class="footer-col reveal" style="transition-delay: 0.2s;">
+          <h4>Contact & Links</h4>
+          <ul style="font-size: 0.95rem;">
+            <li><a href="mailto:oladeji.lawrence@gmail.com"
+                style="color: rgba(255,255,255,0.6);">oladeji.lawrence@gmail.com</a></li>
+            <li><a href="https://wa.me/2349038819790" target="_blank" style="color: #D4AF37;">+234 903 881 9790</a></li>
+            <li style="margin-top: 10px;"><a href="#themes" style="color: rgba(255,255,255,0.6);">Our Themes</a></li>
+            <li><a href="javascript:void(0)" onclick="shareToSocial()" style="color: rgba(255,255,255,0.6);">📤 Share
+                the Love</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 ARANOVA. All rights reserved. Lagos, Nigeria.</p>
+        <p>© 2026 ARANOVA. All rights reserved. | <span style="color: #D4AF37;">🔒 Privacy Guarantee: Your special
+            information is safe.</span></p>
       </div>
     </div>
   </footer>

@@ -792,7 +792,61 @@ a {
     border-radius: 20px;
 }
 
-/* CTA Card */
+/* Luxury Button & Footer */
+.btn-gold-luxury {
+    border: 1.5px solid var(--gold-deep);
+    color: var(--gold-deep);
+    background: transparent;
+    padding: 0.8rem 1.8rem;
+    border-radius: 40px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
+}
+
+.btn-gold-luxury:hover {
+    background: var(--gold-deep);
+    color: #fff !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(184, 134, 11, 0.25);
+}
+
+.footer-bottom {
+    background: #000;
+    padding: 5rem 0 3rem;
+    border-top: 1px solid rgba(184, 134, 11, 0.1);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.footer-col h3 {
+    color: var(--gold-deep);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+}
+
+.footer-legal {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 2rem;
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+
+.privacy-lock {
+    color: var(--gold-light);
+    font-weight: 600;
+}
+
 .product-cta-card {
     display: flex;
     align-items: center;
@@ -1542,7 +1596,24 @@ img[data-error="true"]::after {
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
-/* ─── Enhanced Savings Row ─── */
+/* ─── Enhanced Savings ─── */
+.luxury-logo {
+    color: var(--gold-deep);
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.luxury-logo .sub {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: #fff;
+    opacity: 0.7;
+    display: block;
+    margin-top: -5px;
+}
+
 .savings-table tbody tr {
     transition: background 0.2s, transform 0.15s;
 }
